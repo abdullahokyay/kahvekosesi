@@ -43,7 +43,10 @@ public class DashboardController {
 
     @GetMapping("/waiter")
     public String showWaiterPanel(Model model) {
+
         model.addAttribute("tables", orderService.getAllTables());
+        model.addAttribute("orderService", orderService);
+
         return "waiter";
     }
 

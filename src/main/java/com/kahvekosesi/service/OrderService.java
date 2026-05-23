@@ -71,6 +71,13 @@ public class OrderService {
                         order.getMenuItem().getPrice() * order.getQuantity())
                 .sum();
     }
+    public int getOrderCountForTable(Long tableId) {
+        return orderRepository.findByRestaurantTableId(tableId).size();
+    }
+
+    public Double getTableTotal(Long tableId) {
+        return calculateTotal(tableId);
+    }
 
     public List<Order> getOrdersByTable(Long tableId) {
         return orderRepository.findByRestaurantTableId(tableId);

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Hata | Kahve Köşesi</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<div class="container mt-5">
+    <div class="card shadow border-0 text-center">
+        <div class="card-body p-5">
+            <h1 class="text-danger mb-3">Bir hata oluştu</h1>
+
+            <p class="fs-5" th:text="${errorMessage}">
+                İşlem sırasında beklenmeyen bir hata oluştu.
+            </p>
+
+            <a href="/" class="btn btn-dark mt-3">Ana Sayfaya Dön</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

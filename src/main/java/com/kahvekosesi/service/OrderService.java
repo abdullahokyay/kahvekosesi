@@ -19,6 +19,7 @@ public class OrderService {
     private final MenuItemRepository menuItemRepository;
     private final RestaurantTableRepository restaurantTableRepository;
     private final OrderRepository orderRepository;
+    private static Double dailyTotalSales = 0.0;
 
     public List<MenuItem> getAllMenuItems() {
         return menuItemRepository.findAll();
@@ -38,6 +39,7 @@ public class OrderService {
     public void addOrderToTable(Long tableId, Long menuItemId, Integer quantity) {
         RestaurantTable table = restaurantTableRepository.findById(tableId)
                 .orElseThrow(() -> new RuntimeException("Masa bulunamadı!"));
+
         if (!table.isOccupied()) {
             table.setOccupied(true);
             restaurantTableRepository.save(table);
@@ -50,7 +52,6 @@ public class OrderService {
         orderRepository.save(order);
     }
 
-
     public Double calculateTotal(Long tableId) {
         List<Order> orders = orderRepository.findByRestaurantTableId(tableId);
         return orders.stream()
@@ -58,13 +59,35 @@ public class OrderService {
                 .sum();
     }
 
+    public List<Order> getOrdersByTable(Long tableId) {
+        return orderRepository.findByRestaurantTableId(tableId);
+    }
+
     @Transactional
     public void checkoutTable(Long tableId) {
         RestaurantTable table = restaurantTableRepository.findById(tableId)
                 .orElseThrow(() -> new RuntimeException("Masa bulunamadı!"));
+        Double tableTotal = calculateTotal(tableId);
+        dailyTotalSales += tableTotal;
 
         table.setOccupied(false);
         restaurantTableRepository.save(table);
+
         orderRepository.deleteByRestaurantTableId(tableId);
     }
+    public Double getDailyTotalSales() {
+        return dailyTotalSales;
+    }
+
+    public void saveMenuItem(MenuItem menuItem) {
+        menuItemRepository.save(menuItem);
+    }
+
+    public void updateProductPrice(Long id, Double newPrice) {
+        MenuItem item = menuItemRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Ürün bulunamadı!"));
+        item.setPrice(newPrice);
+        menuItemRepository.save(item);
+    }
+
 }

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Kahve Köşesi - Admin Paneli</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-5">
+        <h1 class="fw-bold text-dark">💼 Kahve Köşesi Patron Katı</h1>
+        <a href="/" class="btn btn-outline-dark fw-bold">⬅️ Ana Menüye Dön</a>
+    </div>
+
+    <div class="row mb-5">
+        <div class="col-md-12">
+            <div class="card bg-dark text-white shadow p-4 text-center" style="border-radius: 20px;">
+                <h4 class="text-uppercase text-muted small fw-bold mb-2">💰 BUGÜNKÜ TOPLAM CİRO</h4>
+                <h1 class="display-3 fw-bold text-success" th:text="${dailySales} + ' TL'">0.00 TL</h1>
+                <p class="text-muted mb-0 small">Masalardan tahsil edilen net nakit akışı.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 p-4" style="border-radius: 15px;">
+                <h4 class="fw-bold text-primary mb-3">➕ Menüye Yeni Ürün Ekle</h4>
+                <form th:action="@{/admin/add-product}" method="post">
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Ürün Adı:</label>
+                        <input type="text" name="name" class="form-control" placeholder="Örn: Espresso Macchiato" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Fiyat (TL):</label>
+                        <input type="number" name="price" class="form-control" step="0.1" placeholder="Örn: 85.0" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Kategori:</label>
+                        <input type="text" name="category" class="form-control" placeholder="Örn: Sıcak Kahve" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100 fw-bold shadow-sm">Ürünü Menüye Ekle 🚀</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <div class="card shadow-sm border-0 p-4" style="border-radius: 15px;">
+                <h4 class="fw-bold text-dark mb-3">📋 Mevcut Menü ve Fiyat Revizesi</h4>
+                <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+                    <table class="table table-hover align-middle">
+                        <thead class="table-dark sticky-top">
+                        <tr>
+                            <th>Kategori</th>
+                            <th>Ürün Adı</th>
+                            <th>Mevcut Fiyat</th>
+                            <th style="width: 200px;">Yeni Fiyat Gir</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="item : ${menu}">
+                            <td><span class="badge bg-secondary" th:text="${item.category}">Kat</span></td>
+                            <td class="fw-bold" th:text="${item.name}">Ürün</td>
+                            <td class="text-primary fw-bold" th:text="${item.price} + ' TL'">0 TL</td>
+                            <td>
+                                <form th:action="@{/admin/update-price/{id}(id=${item.id})}" method="post" class="d-flex gap-2">
+                                    <input type="number" name="newPrice" class="form-control form-control-sm" step="0.1" placeholder="Yeni ₺" required>
+                                    <button type="submit" class="btn btn-sm btn-success fw-bold">Güncelle</button>
+                                </form>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

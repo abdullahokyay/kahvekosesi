@@ -19,30 +19,53 @@ public class SecurityConfig {
 
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/login", "/customer/order", "/css/**", "/js/**", "/images/**").permitAll()
+                        .requestMatchers(
+                                "/",
+                                "/menu",
+                                "/login",
+                                "/customer/order",
+                                "/css/**",
+                                "/js/**",
+                                "/images/**"
+                        ).permitAll()
+
                         .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/waiter/**").hasAnyRole("ADMIN", "WAITER")
+
+                        .requestMatchers("/waiter/**")
+                        .hasAnyRole("ADMIN", "WAITER")
+
                         .anyRequest().authenticated()
                 )
+
                 .formLogin(form -> form
                         .loginPage("/login")
-                        .successHandler((request, response, authentication) -> {
-                            boolean isAdmin = authentication.getAuthorities().stream()
-                                    .anyMatch(role -> role.getAuthority().equals("ROLE_ADMIN"));
 
-                            boolean isWaiter = authentication.getAuthorities().stream()
-                                    .anyMatch(role -> role.getAuthority().equals("ROLE_WAITER"));
+                        .successHandler((request, response, authentication) -> {
+
+                            boolean isAdmin = authentication.getAuthorities()
+                                    .stream()
+                                    .anyMatch(role ->
+                                            role.getAuthority().equals("ROLE_ADMIN"));
+
+                            boolean isWaiter = authentication.getAuthorities()
+                                    .stream()
+                                    .anyMatch(role ->
+                                            role.getAuthority().equals("ROLE_WAITER"));
 
                             if (isAdmin) {
                                 response.sendRedirect("/admin");
+
                             } else if (isWaiter) {
                                 response.sendRedirect("/waiter");
+
                             } else {
                                 response.sendRedirect("/");
                             }
                         })
+
                         .permitAll()
                 )
+
                 .logout(logout -> logout
                         .logoutSuccessUrl("/login?logout")
                         .permitAll()

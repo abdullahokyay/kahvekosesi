@@ -57,10 +57,14 @@ public class DashboardController {
     }
 
     @GetMapping("/admin")
-    public String showAdminPanel(Model model) {
-        model.addAttribute("menu", orderService.getAllMenuItems());
+    public String showAdminPanel(@RequestParam(required = false) String keyword,
+                                 Model model) {
+
+        model.addAttribute("menu", orderService.searchMenuItems(keyword));
         model.addAttribute("dailySales", orderService.getDailyTotalSales());
         model.addAttribute("menuItemDto", new MenuItemDto());
+        model.addAttribute("keyword", keyword);
+
         return "admin";
     }
 
@@ -88,6 +92,11 @@ public class DashboardController {
     public String adminUpdatePrice(@PathVariable Long id,
                                    @RequestParam Double newPrice) {
         orderService.updateProductPrice(id, newPrice);
+        return "redirect:/admin";
+    }
+    @PostMapping("/admin/delete-product/{id}")
+    public String adminDeleteProduct(@PathVariable Long id) {
+        orderService.deleteMenuItem(id);
         return "redirect:/admin";
     }
 }

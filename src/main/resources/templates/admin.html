@@ -68,6 +68,25 @@
         <div class="col-md-8">
             <div class="card shadow-sm border-0 p-4" style="border-radius: 15px;">
                 <h4 class="fw-bold text-dark mb-3">📋 Mevcut Menü ve Fiyat Revizesi</h4>
+                <form method="get" th:action="@{/admin}" class="row g-2 mb-4">
+
+                    <div class="col-md-10">
+                        <input type="text"
+                               name="keyword"
+                               th:value="${keyword}"
+                               class="form-control"
+                               placeholder="Ürün ara...">
+                    </div>
+
+                    <div class="col-md-2">
+                        <button type="submit"
+                                class="btn btn-dark w-100 fw-bold">
+
+                            Ara
+                        </button>
+                    </div>
+
+                </form>
 
                 <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
                     <table class="table table-hover align-middle">
@@ -77,6 +96,7 @@
                             <th>Ürün Adı</th>
                             <th>Mevcut Fiyat</th>
                             <th style="width: 200px;">Yeni Fiyat Gir</th>
+                            <th style="width: 120px;">İşlem</th>
                         </tr>
                         </thead>
 
@@ -100,6 +120,14 @@
                                         Güncelle
                                     </button>
                                 </form>
+                            <td>
+                                <form th:action="@{/admin/delete-product/{id}(id=${item.id})}" method="post">
+                                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                                    <button type="submit" class="btn btn-sm btn-danger fw-bold w-100">
+                                        Sil
+                                    </button>
+                                </form>
+                            </td>
                             </td>
                         </tr>
                         </tbody>

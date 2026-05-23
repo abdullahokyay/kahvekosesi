@@ -117,4 +117,17 @@ public class OrderService {
 
         menuItemRepository.save(item);
     }
+    public void deleteMenuItem(Long id) {
+        MenuItem item = menuItemRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Ürün bulunamadı!"));
+
+        menuItemRepository.delete(item);
+    }
+    public List<MenuItem> searchMenuItems(String keyword) {
+        if (keyword == null || keyword.isBlank()) {
+            return menuItemRepository.findAll();
+        }
+
+        return menuItemRepository.findByNameContainingIgnoreCase(keyword);
+    }
 }

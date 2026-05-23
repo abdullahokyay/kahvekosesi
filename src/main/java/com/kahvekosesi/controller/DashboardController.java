@@ -34,17 +34,7 @@ public class DashboardController {
         return "login";
     }
 
-    @PostMapping("/login")
-    public String handleLogin(@RequestParam String username, @RequestParam String password, Model model) {
-        if ("admin".equals(username) && "patron".equals(password)) {
-            return "redirect:/admin";
-        } else if ("garson".equals(username) && "123".equals(password)) {
-            return "redirect:/waiter";
-        } else {
-            model.addAttribute("error", true);
-            return "login";
-        }
-    }
+
     @GetMapping("/waiter")
     public String showWaiterPanel(Model model) {
         model.addAttribute("tables", orderService.getAllTables());

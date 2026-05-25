@@ -4,31 +4,91 @@
     <meta charset="UTF-8">
     <title>Kahve Köşesi - Menü</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <style>
-        body { background: #f7f1e8; color: #2b2118; }
-        .navbar { background: rgba(34, 24, 18, 0.97); }
-        .page-header {
-            background: linear-gradient(135deg, #3b2619, #8b5e3c);
-            color: white;
-            border-radius: 0 0 36px 36px;
-            padding: 55px 0;
+        body {
+            background: #f7f1e8;
+            color: #2b2118;
         }
+
+        .navbar {
+            background: rgba(34, 24, 18, 0.97);
+        }
+
+        .page-header {
+            background:
+                    linear-gradient(135deg, rgba(45, 29, 18, 0.92), rgba(139, 94, 60, 0.75)),
+                    url('https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1600&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            border-radius: 0 0 38px 38px;
+            padding: 75px 0;
+        }
+
+        .category-nav {
+            background: white;
+            border-radius: 22px;
+            padding: 18px;
+        }
+
+        .category-title {
+            font-weight: 900;
+            margin-top: 42px;
+            margin-bottom: 20px;
+        }
+
         .menu-card {
             border: none;
-            border-radius: 20px;
-            transition: 0.2s;
+            border-radius: 24px;
+            overflow: hidden;
+            transition: 0.25s;
+            background: white;
         }
-        .menu-card:hover { transform: translateY(-4px); }
-        .category-title {
-            font-weight: 800;
-            margin-top: 35px;
-            margin-bottom: 18px;
+
+        .menu-card:hover {
+            transform: translateY(-6px);
         }
+
+        .menu-img {
+            height: 180px;
+            object-fit: cover;
+            width: 100%;
+        }
+
+        .price-text {
+            color: #8b4513;
+            font-size: 22px;
+        }
+
         .order-card {
             border: none;
-            border-radius: 24px;
+            border-radius: 26px;
             position: sticky;
             top: 25px;
+            background: white;
+        }
+
+        .soft-badge {
+            border-radius: 999px;
+            padding: 7px 13px;
+        }
+
+        .success-box {
+            border: none;
+            border-radius: 18px;
+        }
+
+        .cart-item {
+            background: #f8f4ef;
+            border-radius: 18px;
+            border: 1px solid #eadfd3;
+        }
+
+        .cart-total-box {
+            background: #2b2118;
+            color: white;
+            border-radius: 18px;
         }
     </style>
 </head>
@@ -48,77 +108,199 @@
 
 <header class="page-header text-center shadow-sm">
     <div class="container">
-        <h1 class="display-4 fw-bold">Menümüz</h1>
-        <p class="lead mb-0 text-white-50">Favori lezzetini seç, masandan kolayca sipariş oluştur.</p>
+        <h1 class="display-3 fw-bold">Menümüz</h1>
+        <p class="lead mb-0 text-white-50">
+            Ürünleri sepete ekle, toplam tutarı gör ve masandan siparişini oluştur.
+        </p>
     </div>
 </header>
 
+<div class="container my-4">
+    <div class="category-nav shadow-sm d-flex justify-content-center flex-wrap gap-2">
+        <a href="#sicak-kahveler" class="btn btn-outline-dark fw-bold">☕ Sıcak Kahveler</a>
+        <a href="#soguk-kahveler" class="btn btn-outline-dark fw-bold">🧊 Soğuk Kahveler</a>
+        <a href="#tatlilar" class="btn btn-outline-dark fw-bold">🍰 Tatlılar</a>
+        <a href="#icecekler" class="btn btn-outline-dark fw-bold">🍋 Alternatif İçecekler</a>
+    </div>
+</div>
+
 <div class="container-fluid px-5 my-5">
 
-    <div th:if="${param.success}" class="alert alert-success text-center fw-bold shadow-sm">
-        ✅ Siparişiniz başarıyla alındı.
+    <div th:if="${param.success}" class="alert alert-success success-box text-center fw-bold shadow-sm">
+        ✅ Siparişiniz başarıyla alındı. Afiyet olsun!
     </div>
 
     <div class="row g-4">
 
         <div class="col-lg-8">
 
-            <h2 class="category-title">☕ Sıcak Kahveler</h2>
-            <div class="row g-3">
+            <h2 id="sicak-kahveler" class="category-title">☕ Sıcak Kahveler</h2>
+            <div class="row g-4">
+
                 <div class="col-md-6" th:each="item : ${menu}" th:if="${item.category == 'Sıcak Kahve'}">
-                    <div class="card menu-card shadow-sm h-100 p-3">
-                        <span class="badge bg-danger mb-2 align-self-start">Sıcak Kahve</span>
-                        <h5 class="fw-bold" th:text="${item.name}">Ürün</h5>
-                        <p class="text-muted mb-2">Özenle hazırlanmış kahve lezzeti.</p>
-                        <h5 class="text-primary fw-bold mb-0" th:text="${item.price} + ' TL'">0 TL</h5>
+                    <div class="card menu-card shadow-sm h-100">
+                        <img class="menu-img"
+                             th:src="${item.name.contains('Türk')} ? 'https://images.unsplash.com/photo-1578374173713-32f4ae6f3971?auto=format&fit=crop&w=800&q=80' :
+                                     (${item.name.contains('Latte')} ? 'https://images.unsplash.com/photo-1570968915860-54d5c301fa9f?auto=format&fit=crop&w=800&q=80' :
+                                     (${item.name.contains('Cappuccino')} ? 'https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=800&q=80' :
+                                     'https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=800&q=80'))"
+                             alt="Sıcak Kahve">
+
+                        <div class="card-body p-4">
+                            <span class="badge bg-danger soft-badge mb-3">Sıcak Kahve</span>
+                            <h4 class="fw-bold" th:text="${item.name}">Ürün</h4>
+
+                            <p class="text-muted"
+                               th:text="${item.name.contains('Espresso')} ? 'Yoğun aromalı, güçlü ve klasik İtalyan kahvesi.' :
+                                       (${item.name.contains('Americano')} ? 'Espresso üzerine sıcak su eklenerek hazırlanan yumuşak içimli kahve.' :
+                                       (${item.name.contains('Latte')} ? 'Espresso ve buharla ısıtılmış sütün dengeli buluşması.' :
+                                       (${item.name.contains('Cappuccino')} ? 'Bol süt köpüğüyle hazırlanan klasik kahve keyfi.' :
+                                       (${item.name.contains('Türk')} ? 'Geleneksel sunumuyla bol köpüklü Türk kahvesi.' :
+                                       'Taze çekilmiş kahve çekirdekleriyle hazırlanan özel sıcak kahve.'))))">
+                            </p>
+
+                            <div class="fw-bold price-text" th:text="${item.price} + ' TL'">0 TL</div>
+
+                            <button type="button"
+                                    class="btn btn-dark w-100 mt-3 fw-bold"
+                                    th:data-id="${item.id}"
+                                    th:data-name="${item.name}"
+                                    th:data-price="${item.price}"
+                                    onclick="addToCart(this)">
+                                Sepete Ekle
+                            </button>
+                        </div>
                     </div>
                 </div>
+
             </div>
 
-            <h2 class="category-title">🧊 Soğuk Kahveler</h2>
-            <div class="row g-3">
+            <h2 id="soguk-kahveler" class="category-title">🧊 Soğuk Kahveler</h2>
+            <div class="row g-4">
+
                 <div class="col-md-6" th:each="item : ${menu}" th:if="${item.category == 'Soğuk Kahve'}">
-                    <div class="card menu-card shadow-sm h-100 p-3">
-                        <span class="badge bg-info text-dark mb-2 align-self-start">Soğuk Kahve</span>
-                        <h5 class="fw-bold" th:text="${item.name}">Ürün</h5>
-                        <p class="text-muted mb-2">Ferahlatıcı ve yoğun kahve aroması.</p>
-                        <h5 class="text-primary fw-bold mb-0" th:text="${item.price} + ' TL'">0 TL</h5>
+                    <div class="card menu-card shadow-sm h-100">
+                        <img class="menu-img"
+                             th:src="${item.name.contains('Cold Brew')} ? 'https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?auto=format&fit=crop&w=800&q=80' :
+                                     (${item.name.contains('Frappe')} ? 'https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=800&q=80' :
+                                     'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=800&q=80')"
+                             alt="Soğuk Kahve">
+
+                        <div class="card-body p-4">
+                            <span class="badge bg-info text-dark soft-badge mb-3">Soğuk Kahve</span>
+                            <h4 class="fw-bold" th:text="${item.name}">Ürün</h4>
+
+                            <p class="text-muted"
+                               th:text="${item.name.contains('Cold Brew')} ? 'Uzun süre soğuk demleme yöntemiyle hazırlanan ferah kahve.' :
+                                       (${item.name.contains('Frappe')} ? 'Buzla harmanlanan, tatlı ve kremamsı soğuk kahve.' :
+                                       (${item.name.contains('Mocha')} ? 'Çikolata aromasıyla zenginleşen soğuk kahve lezzeti.' :
+                                       'Buz gibi servis edilen, ferahlatıcı kahve deneyimi.'))">
+                            </p>
+
+                            <div class="fw-bold price-text" th:text="${item.price} + ' TL'">0 TL</div>
+
+                            <button type="button"
+                                    class="btn btn-dark w-100 mt-3 fw-bold"
+                                    th:data-id="${item.id}"
+                                    th:data-name="${item.name}"
+                                    th:data-price="${item.price}"
+                                    onclick="addToCart(this)">
+                                Sepete Ekle
+                            </button>
+                        </div>
                     </div>
                 </div>
+
             </div>
 
-            <h2 class="category-title">🍰 Tatlılar</h2>
-            <div class="row g-3">
+            <h2 id="tatlilar" class="category-title">🍰 Tatlılar</h2>
+            <div class="row g-4">
+
                 <div class="col-md-6" th:each="item : ${menu}" th:if="${item.category == 'Tatlı'}">
-                    <div class="card menu-card shadow-sm h-100 p-3">
-                        <span class="badge bg-warning text-dark mb-2 align-self-start">Tatlı</span>
-                        <h5 class="fw-bold" th:text="${item.name}">Ürün</h5>
-                        <p class="text-muted mb-2">Kahvenin yanına en güzel eşlikçi.</p>
-                        <h5 class="text-primary fw-bold mb-0" th:text="${item.price} + ' TL'">0 TL</h5>
+                    <div class="card menu-card shadow-sm h-100">
+                        <img class="menu-img"
+                             th:src="${item.name.contains('San Sebastian')} ? 'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=800&q=80' :
+                                     (${item.name.contains('Tiramisu')} ? 'https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?auto=format&fit=crop&w=800&q=80' :
+                                     (${item.name.contains('Brownie')} ? 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=800&q=80' :
+                                     'https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=800&q=80'))"
+                             alt="Tatlı">
+
+                        <div class="card-body p-4">
+                            <span class="badge bg-warning text-dark soft-badge mb-3">Tatlı</span>
+                            <h4 class="fw-bold" th:text="${item.name}">Ürün</h4>
+
+                            <p class="text-muted"
+                               th:text="${item.name.contains('San Sebastian')} ? 'Kremamsı dokusu ve yoğun lezzetiyle özel cheesecake.' :
+                                       (${item.name.contains('Tiramisu')} ? 'Kahve aroması ve mascarpone lezzetiyle klasik İtalyan tatlısı.' :
+                                       (${item.name.contains('Brownie')} ? 'Yoğun çikolatalı, dışı hafif çıtır içi yumuşak brownie.' :
+                                       (${item.name.contains('Magnolia')} ? 'Hafif kreması ve meyveli dokusuyla ferah tatlı seçeneği.' :
+                                       'Kahvenin yanında keyifle tüketebileceğiniz günlük tatlı.')))">
+                            </p>
+
+                            <div class="fw-bold price-text" th:text="${item.price} + ' TL'">0 TL</div>
+
+                            <button type="button"
+                                    class="btn btn-dark w-100 mt-3 fw-bold"
+                                    th:data-id="${item.id}"
+                                    th:data-name="${item.name}"
+                                    th:data-price="${item.price}"
+                                    onclick="addToCart(this)">
+                                Sepete Ekle
+                            </button>
+                        </div>
                     </div>
                 </div>
+
             </div>
 
-            <h2 class="category-title">🍋 İçecekler</h2>
-            <div class="row g-3 mb-5">
+            <h2 id="icecekler" class="category-title">🍋 Alternatif İçecekler</h2>
+            <div class="row g-4 mb-5">
+
                 <div class="col-md-6" th:each="item : ${menu}" th:if="${item.category == 'İçecek'}">
-                    <div class="card menu-card shadow-sm h-100 p-3">
-                        <span class="badge bg-success mb-2 align-self-start">İçecek</span>
-                        <h5 class="fw-bold" th:text="${item.name}">Ürün</h5>
-                        <p class="text-muted mb-2">Günün her anına uygun serinletici lezzet.</p>
-                        <h5 class="text-primary fw-bold mb-0" th:text="${item.price} + ' TL'">0 TL</h5>
+                    <div class="card menu-card shadow-sm h-100">
+                        <img class="menu-img"
+                             th:src="${item.name.contains('Limonata')} ? 'https://images.unsplash.com/photo-1621263764928-df1444c5e859?auto=format&fit=crop&w=800&q=80' :
+                                     (${item.name.contains('Çay')} ? 'https://images.unsplash.com/photo-1547825407-2d060104b7f8?auto=format&fit=crop&w=800&q=80' :
+                                     (${item.name.contains('Çikolata')} ? 'https://images.unsplash.com/photo-1542990253-0d0f5be5f0ed?auto=format&fit=crop&w=800&q=80' :
+                                     'https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=800&q=80'))"
+                             alt="Alternatif İçecek">
+
+                        <div class="card-body p-4">
+                            <span class="badge bg-success soft-badge mb-3">Alternatif İçecek</span>
+                            <h4 class="fw-bold" th:text="${item.name}">Ürün</h4>
+
+                            <p class="text-muted"
+                               th:text="${item.name.contains('Limonata')} ? 'Taze limon aromasıyla hazırlanan ferahlatıcı ev yapımı içecek.' :
+                                       (${item.name.contains('Çay')} ? 'Demli, sıcak ve klasik çay keyfi.' :
+                                       (${item.name.contains('Portakal')} ? 'Taze sıkılmış portakallarla hazırlanan doğal içecek.' :
+                                       (${item.name.contains('Çikolata')} ? 'Yoğun kakao aromalı sıcak ve tatlı içecek.' :
+                                       'Günün her saatine uygun ferahlatıcı içecek alternatifi.')))">
+                            </p>
+
+                            <div class="fw-bold price-text" th:text="${item.price} + ' TL'">0 TL</div>
+
+                            <button type="button"
+                                    class="btn btn-dark w-100 mt-3 fw-bold"
+                                    th:data-id="${item.id}"
+                                    th:data-name="${item.name}"
+                                    th:data-price="${item.price}"
+                                    onclick="addToCart(this)">
+                                Sepete Ekle
+                            </button>
+                        </div>
                     </div>
                 </div>
+
             </div>
 
         </div>
 
         <div class="col-lg-4">
             <div class="card order-card shadow p-4">
-                <h3 class="fw-bold text-success text-center mb-3">📲 Masadan Sipariş</h3>
-                <p class="text-muted text-center">Masanı ve ürününü seçerek siparişini oluştur.</p>
+                <h3 class="fw-bold text-success text-center mb-3">🛒 Sepetim</h3>
+                <p class="text-muted text-center">Ürünleri sepete ekle, toplamı gör ve siparişini onayla.</p>
 
-                <form th:action="@{/customer/order}" method="post">
+                <form th:action="@{/customer/order}" method="post" id="orderForm">
                     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 
                     <div class="mb-3">
@@ -132,24 +314,23 @@
                         </select>
                     </div>
 
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">Ürün Seçiniz</label>
-                        <select name="menuItemId" class="form-select form-select-lg" required>
-                            <option value="">Ürün seçiniz</option>
-                            <option th:each="item : ${menu}"
-                                    th:value="${item.id}"
-                                    th:text="${item.name} + ' - ' + ${item.price} + ' TL'">
-                            </option>
-                        </select>
+                    <div id="cartItems" class="mb-3">
+                        <div class="text-muted text-center py-3">
+                            Sepetiniz boş.
+                        </div>
                     </div>
 
-                    <div class="mb-4">
-                        <label class="form-label fw-semibold">Adet</label>
-                        <input type="number" name="quantity" class="form-control form-control-lg" value="1" min="1" required>
+                    <div id="hiddenInputs"></div>
+
+                    <div class="cart-total-box p-3 mt-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="fw-bold fs-5">Toplam</span>
+                            <span class="fw-bold fs-4" id="cartTotal">0 TL</span>
+                        </div>
                     </div>
 
-                    <button type="submit" class="btn btn-success btn-lg w-100 fw-bold py-3 shadow-sm">
-                        Siparişi Tamamla
+                    <button type="submit" class="btn btn-success btn-lg w-100 fw-bold py-3 shadow-sm mt-4">
+                        Siparişi Onayla
                     </button>
                 </form>
             </div>
@@ -157,6 +338,134 @@
 
     </div>
 </div>
+
+<script>
+    let cart = [];
+
+    function addToCart(button) {
+        const id = button.getAttribute("data-id");
+        const name = button.getAttribute("data-name");
+        const price = Number(button.getAttribute("data-price"));
+
+        const existingItem = cart.find(item => item.id === id);
+
+        if (existingItem) {
+            existingItem.quantity += 1;
+        } else {
+            cart.push({
+                id: id,
+                name: name,
+                price: price,
+                quantity: 1
+            });
+        }
+
+        renderCart();
+    }
+
+    function increaseQuantity(id) {
+        const item = cart.find(item => item.id === id);
+
+        if (item) {
+            item.quantity += 1;
+        }
+
+        renderCart();
+    }
+
+    function decreaseQuantity(id) {
+        const item = cart.find(item => item.id === id);
+
+        if (item) {
+            item.quantity -= 1;
+
+            if (item.quantity <= 0) {
+                cart = cart.filter(cartItem => cartItem.id !== id);
+            }
+        }
+
+        renderCart();
+    }
+
+    function removeFromCart(id) {
+        cart = cart.filter(item => item.id !== id);
+        renderCart();
+    }
+
+    function renderCart() {
+        const cartItems = document.getElementById("cartItems");
+        const hiddenInputs = document.getElementById("hiddenInputs");
+        const cartTotal = document.getElementById("cartTotal");
+
+        cartItems.innerHTML = "";
+        hiddenInputs.innerHTML = "";
+
+        if (cart.length === 0) {
+            cartItems.innerHTML = `
+                <div class="text-muted text-center py-3">
+                    Sepetiniz boş.
+                </div>
+            `;
+            cartTotal.innerText = "0 TL";
+            return;
+        }
+
+        let total = 0;
+
+        cart.forEach(item => {
+            const itemTotal = item.price * item.quantity;
+            total += itemTotal;
+
+            cartItems.innerHTML += `
+                <div class="cart-item p-3 mb-2">
+                    <div class="d-flex justify-content-between align-items-start gap-2">
+                        <div>
+                            <strong>${item.name}</strong>
+                            <div class="text-muted small">${item.price} TL x ${item.quantity}</div>
+                        </div>
+
+                        <button type="button"
+                                class="btn btn-sm btn-outline-danger"
+                                onclick="removeFromCart('${item.id}')">
+                            Sil
+                        </button>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <div class="btn-group btn-group-sm">
+                            <button type="button"
+                                    class="btn btn-outline-dark"
+                                    onclick="decreaseQuantity('${item.id}')">-</button>
+
+                            <button type="button"
+                                    class="btn btn-outline-dark disabled">${item.quantity}</button>
+
+                            <button type="button"
+                                    class="btn btn-outline-dark"
+                                    onclick="increaseQuantity('${item.id}')">+</button>
+                        </div>
+
+                        <strong>${itemTotal} TL</strong>
+                    </div>
+                </div>
+            `;
+
+            hiddenInputs.innerHTML += `
+                <input type="hidden" name="menuItemIds" value="${item.id}">
+                <input type="hidden" name="quantities" value="${item.quantity}">
+            `;
+        });
+
+        cartTotal.innerText = total + " TL";
+    }
+
+    document.getElementById("orderForm").addEventListener("submit", function(event) {
+        if (cart.length === 0) {
+            event.preventDefault();
+            alert("Sepet boş. Lütfen en az bir ürün ekleyin.");
+        }
+    });
+</script>
 
 </body>
 </html>

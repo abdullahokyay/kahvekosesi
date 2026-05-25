@@ -10,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequiredArgsConstructor
 public class DashboardController {
@@ -30,9 +32,11 @@ public class DashboardController {
 
     @PostMapping("/customer/order")
     public String customerAddOrder(@RequestParam Long tableId,
-                                   @RequestParam Long menuItemId,
-                                   @RequestParam Integer quantity) {
-        orderService.addOrderToTable(tableId, menuItemId, quantity);
+                                   @RequestParam List<Long> menuItemIds,
+                                   @RequestParam List<Integer> quantities) {
+
+        orderService.addMultipleOrdersToTable(tableId, menuItemIds, quantities);
+
         return "redirect:/menu?success=true";
     }
 

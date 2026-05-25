@@ -130,4 +130,8 @@ public class OrderService {
 
         return menuItemRepository.findByNameContainingIgnoreCase(keyword);
     }
-}
+    public void addMultipleOrdersToTable(Long tableId, List<Long> menuItemIds, List<Integer> quantities) {
+        for (int i = 0; i < menuItemIds.size(); i++) {
+            addOrderToTable(tableId, menuItemIds.get(i), quantities.get(i));
+        }
+    }}

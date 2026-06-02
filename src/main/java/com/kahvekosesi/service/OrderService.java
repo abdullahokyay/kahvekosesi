@@ -172,4 +172,28 @@ public class OrderService {
 
         return menuItemRepository.findByNameContainingIgnoreCase(keyword);
     }
+    public long getTotalOrderCount() {
+        return orderRepository.count();
+    }
+
+    public int getTotalSoldProductQuantity() {
+        return orderRepository.findAll()
+                .stream()
+                .mapToInt(Order::getQuantity)
+                .sum();
+    }
+
+    public String getBestSellingProductName() {
+        return orderRepository.findAll()
+                .stream()
+                .collect(java.util.stream.Collectors.groupingBy(
+                        order -> order.getMenuItem().getName(),
+                        java.util.stream.Collectors.summingInt(Order::getQuantity)
+                ))
+                .entrySet()
+                .stream()
+                .max(java.util.Map.Entry.comparingByValue())
+                .map(java.util.Map.Entry::getKey)
+                .orElse("Henüz satış yok");
+    }
 }

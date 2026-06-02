@@ -68,6 +68,9 @@ public class DashboardController {
         model.addAttribute("dailySales", orderService.getDailyTotalSales());
         model.addAttribute("menuItemDto", new MenuItemDto());
         model.addAttribute("keyword", keyword);
+        model.addAttribute("totalOrderCount", orderService.getTotalOrderCount());
+        model.addAttribute("totalSoldProductQuantity", orderService.getTotalSoldProductQuantity());
+        model.addAttribute("bestSellingProductName", orderService.getBestSellingProductName());
 
         return "admin";
     }

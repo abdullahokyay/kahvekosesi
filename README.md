@@ -140,7 +140,7 @@ Projede Derived Query Method yapıları kullanılmıştır.
 Örnek:
 
 ```java
-findByNameContainingIgnoreCase(String name)
+findByNameContainingIgnoreCase(String name);
 ```
 
 ---
@@ -189,14 +189,27 @@ password : 123
 
 # 📷 Ekran Görüntüleri
 
-Buraya:
+## 🏠 Ana Sayfa
 
-* Ana Sayfa
-* Menü
-* Admin Paneli
-* Garson Paneli
+![Ana Sayfa](images/homepage.png)
 
-görselleri eklenebilir.
+---
+
+## ☕ Menü Sayfası
+
+![Menü](images/menu.png)
+
+---
+
+## 💼 Admin Paneli
+
+![Admin Paneli](images/admin.png)
+
+---
+
+## 🤵 Garson Paneli
+
+![Garson Paneli](images/waiter.png)
 
 ---
 

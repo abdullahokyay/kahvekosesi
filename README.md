@@ -6,7 +6,7 @@ Modern cafe/restoran işletmeleri için geliştirilmiş çok katmanlı dijital s
 
 # 📌 Proje Hakkında
 
-Kahve Köşesi; müşterilerin QR / masa üzerinden sipariş verebildiği, garsonların siparişleri yönetebildiği ve yöneticilerin işletmeyi kontrol edebildiği Spring Boot tabanlı cafe otomasyon sistemidir.
+Kahve Köşesi; müşterilerin  masa üzerinden sipariş verebildiği, garsonların siparişleri yönetebildiği ve yöneticilerin işletmeyi kontrol edebildiği Spring Boot tabanlı cafe otomasyon sistemidir.
 
 Bu proje modern web mimarileri kullanılarak geliştirilmiştir.
 
@@ -128,7 +128,7 @@ src
 ├── exception
 ├── templates
 ├── static
-└── uploads
+
 ```
 
 ---
@@ -217,4 +217,3 @@ password : 123
 
 **Abdullah Okyay**
 
-Yönetim Bilişim Sistemleri

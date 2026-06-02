@@ -11,7 +11,5 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     List<Order> findByRestaurantTableId(Long tableId);
 
-    List<Order> findByQuantityGreaterThan(Integer quantity);
-
     void deleteByRestaurantTableId(Long tableId);
 }

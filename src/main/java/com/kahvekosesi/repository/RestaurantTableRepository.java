@@ -9,5 +9,4 @@ import java.util.List;
 @Repository
 public interface RestaurantTableRepository extends JpaRepository<RestaurantTable, Long> {
 
-    List<RestaurantTable> findByOccupied(boolean occupied);
 }

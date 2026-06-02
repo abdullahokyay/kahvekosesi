@@ -24,6 +24,7 @@ public class SecurityConfig {
                                 "/menu",
                                 "/login",
                                 "/customer/order",
+                                "/uploads/**",
                                 "/css/**",
                                 "/js/**",
                                 "/images/**"

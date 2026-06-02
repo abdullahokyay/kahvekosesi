@@ -139,12 +139,7 @@
 
                 <div class="col-md-6" th:each="item : ${menu}" th:if="${item.category == 'Sıcak Kahve'}">
                     <div class="card menu-card shadow-sm h-100">
-                        <img class="menu-img"
-                             th:src="${item.name.contains('Türk')} ? 'https://images.unsplash.com/photo-1578374173713-32f4ae6f3971?auto=format&fit=crop&w=800&q=80' :
-                                     (${item.name.contains('Latte')} ? 'https://images.unsplash.com/photo-1570968915860-54d5c301fa9f?auto=format&fit=crop&w=800&q=80' :
-                                     (${item.name.contains('Cappuccino')} ? 'https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=800&q=80' :
-                                     'https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=800&q=80'))"
-                             alt="Sıcak Kahve">
+                        <img class="menu-img" th:src="@{${item.imageUrl}}" alt="Ürün Görseli">
 
                         <div class="card-body p-4">
                             <span class="badge bg-danger soft-badge mb-3">Sıcak Kahve</span>
@@ -180,11 +175,7 @@
 
                 <div class="col-md-6" th:each="item : ${menu}" th:if="${item.category == 'Soğuk Kahve'}">
                     <div class="card menu-card shadow-sm h-100">
-                        <img class="menu-img"
-                             th:src="${item.name.contains('Cold Brew')} ? 'https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?auto=format&fit=crop&w=800&q=80' :
-                                     (${item.name.contains('Frappe')} ? 'https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=800&q=80' :
-                                     'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=800&q=80')"
-                             alt="Soğuk Kahve">
+                        <img class="menu-img" th:src="@{${item.imageUrl}}" alt="Ürün Görseli">
 
                         <div class="card-body p-4">
                             <span class="badge bg-info text-dark soft-badge mb-3">Soğuk Kahve</span>
@@ -218,12 +209,7 @@
 
                 <div class="col-md-6" th:each="item : ${menu}" th:if="${item.category == 'Tatlı'}">
                     <div class="card menu-card shadow-sm h-100">
-                        <img class="menu-img"
-                             th:src="${item.name.contains('San Sebastian')} ? 'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=800&q=80' :
-                                     (${item.name.contains('Tiramisu')} ? 'https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?auto=format&fit=crop&w=800&q=80' :
-                                     (${item.name.contains('Brownie')} ? 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=800&q=80' :
-                                     'https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=800&q=80'))"
-                             alt="Tatlı">
+                        <img class="menu-img" th:src="@{${item.imageUrl}}" alt="Ürün Görseli">
 
                         <div class="card-body p-4">
                             <span class="badge bg-warning text-dark soft-badge mb-3">Tatlı</span>
@@ -258,12 +244,7 @@
 
                 <div class="col-md-6" th:each="item : ${menu}" th:if="${item.category == 'İçecek'}">
                     <div class="card menu-card shadow-sm h-100">
-                        <img class="menu-img"
-                             th:src="${item.name.contains('Limonata')} ? 'https://images.unsplash.com/photo-1621263764928-df1444c5e859?auto=format&fit=crop&w=800&q=80' :
-                                     (${item.name.contains('Çay')} ? 'https://images.unsplash.com/photo-1547825407-2d060104b7f8?auto=format&fit=crop&w=800&q=80' :
-                                     (${item.name.contains('Çikolata')} ? 'https://images.unsplash.com/photo-1542990253-0d0f5be5f0ed?auto=format&fit=crop&w=800&q=80' :
-                                     'https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=800&q=80'))"
-                             alt="Alternatif İçecek">
+                        <img class="menu-img" th:src="@{${item.imageUrl}}" alt="Ürün Görseli">
 
                         <div class="card-body p-4">
                             <span class="badge bg-success soft-badge mb-3">Alternatif İçecek</span>

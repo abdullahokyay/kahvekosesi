@@ -3,6 +3,7 @@ package com.kahvekosesi.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 @Data
 public class MenuItemDto {
@@ -15,4 +16,6 @@ public class MenuItemDto {
 
     @NotBlank(message = "Kategori boş olamaz")
     private String category;
+
+    private MultipartFile imageFile;
 }

@@ -82,12 +82,7 @@ public class DashboardController {
             return "admin";
         }
 
-        MenuItem menuItem = new MenuItem();
-        menuItem.setName(dto.getName());
-        menuItem.setPrice(dto.getPrice());
-        menuItem.setCategory(dto.getCategory());
-
-        orderService.saveMenuItem(menuItem);
+        orderService.saveMenuItemWithImage(dto);
 
         return "redirect:/admin";
     }
